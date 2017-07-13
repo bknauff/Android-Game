@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class PlayMenu : MonoBehaviour {
 
-	
+    void OnMouseDown()
+    {
+        Application.LoadLevel("GameLevel");
+    }
 }
