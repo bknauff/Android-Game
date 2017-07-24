@@ -19,6 +19,9 @@ public class Stacking : MonoBehaviour {
     private int combo;
     private Vector2 bounds = new Vector2(BOUND_SIZE, BOUND_SIZE);
     private bool gameOver = false;
+    private const float BOUND_GAIN = .15f;
+    private const float START_GAIN = 5;
+
 
 	private void Start () {
         Stack = new GameObject[transform.childCount];
@@ -45,7 +48,7 @@ public class Stacking : MonoBehaviour {
         MoveItem();
 
         //Moving the stack
-        transform.position = Vector3.Lerp(transform.position, Iposition, SPEED * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, Iposition, SPEED - Time.deltaTime);
     }
 
     private void MoveItem()
@@ -75,6 +78,7 @@ public class Stacking : MonoBehaviour {
         }
         Iposition = (Vector3.down) * scoreCount;
         Stack[stackIndex].transform.localPosition = new Vector3(0, scoreCount, 0);
+        Stack[stackIndex].transform.localScale = new Vector3(bounds.x, 1, bounds.y);
     }
 
     private bool PlaceItem()
@@ -97,6 +101,22 @@ public class Stacking : MonoBehaviour {
                 t.localScale = new Vector3(bounds.x, 1, bounds.y);
                 t.localPosition = new Vector3(middle - (lastPosition.x / 2), scoreCount, lastPosition.z);
             }
+            else
+            {
+                if(combo > START_GAIN)
+                {
+                    bounds.x += BOUND_GAIN;
+                    if(bounds.x > BOUND_SIZE)
+                    {
+                        bounds.x = BOUND_SIZE;
+                    }
+                    float middle = lastPosition.x + t.localPosition.x / 2;
+                    t.localScale = new Vector3(bounds.x, 1, bounds.y);
+                    t.localPosition = new Vector3(middle - (lastPosition.x / 2), scoreCount, lastPosition.z);
+                }
+                combo++;
+                t.localPosition = new Vector3(lastPosition.x, scoreCount, lastPosition.z);
+            }
         }
         else
         {
@@ -112,7 +132,23 @@ public class Stacking : MonoBehaviour {
                 }
                 float middle = lastPosition.z + t.localPosition.z / 2;
                 t.localScale = new Vector3(bounds.x, 1, bounds.y);
-                t.localPosition = new Vector3(lastPosition.x, scoreCount, middle - (lastPosition.z / 2));
+                t.localPosition = new Vector3(lastPosition.x, scoreCount,middle - (lastPosition.z/2));
+            }
+            else
+            {
+                if (combo > START_GAIN)
+                {
+                    if (bounds.y > BOUND_SIZE)
+                    {
+                        bounds.y = BOUND_SIZE;
+                    }
+                    bounds.y += BOUND_GAIN;
+                    float middle = lastPosition.z + t.localPosition.z / 2;
+                    t.localScale = new Vector3(bounds.x, 1, bounds.y);
+                    t.localPosition = new Vector3(lastPosition.x, scoreCount, middle - (lastPosition.z/2));
+                }
+                combo++;
+                t.localPosition = new Vector3(lastPosition.x, scoreCount, lastPosition.z);
             }
         }
         secPosition = (isMovingX)
