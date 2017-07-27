@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Stacking : MonoBehaviour {
 
+    public Text score;
     private const float BOUND_SIZE = 3.5f;
     private GameObject[] Stack;
     private int stackIndex = 0;
@@ -39,6 +41,7 @@ public class Stacking : MonoBehaviour {
             {
                 SpawnItem();
                 scoreCount++;
+                score.text = scoreCount.ToString();
             }
             else
             {
@@ -48,7 +51,7 @@ public class Stacking : MonoBehaviour {
         MoveItem();
 
         //Moving the stack
-        //transform.position = Vector3.Lerp(transform.position, Iposition, SPEED - Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, Iposition, SPEED - Time.deltaTime);
     }
 
     private void MoveItem()
