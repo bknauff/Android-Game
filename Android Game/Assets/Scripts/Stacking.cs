@@ -104,7 +104,7 @@ public class Stacking : MonoBehaviour {
                 t.localScale = new Vector3(bounds.x, 1, bounds.y);
                 t.localPosition = new Vector3(middle - (lastPosition.x / 2), scoreCount, lastPosition.z);
             }
-            else
+            /*else
             {
                 if(combo > START_GAIN)
                 {
@@ -119,7 +119,7 @@ public class Stacking : MonoBehaviour {
                 }
                 combo++;
                 t.localPosition = new Vector3(lastPosition.x, scoreCount, lastPosition.z);
-            }
+            }*/
         }
         else
         {
@@ -137,7 +137,7 @@ public class Stacking : MonoBehaviour {
                 t.localScale = new Vector3(bounds.x, 1, bounds.y);
                 t.localPosition = new Vector3(lastPosition.x, scoreCount,middle - (lastPosition.z/2));
             }
-            else
+            /*else
             {
                 if (combo > START_GAIN)
                 {
@@ -152,7 +152,7 @@ public class Stacking : MonoBehaviour {
                 }
                 combo++;
                 t.localPosition = new Vector3(lastPosition.x, scoreCount, lastPosition.z);
-            }
+            }*/
         }
         secPosition = (isMovingX)
             ? t.localPosition.x
