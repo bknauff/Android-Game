@@ -35,7 +35,8 @@ public class Stacking : MonoBehaviour {
     }
 	
 	private void Update () {
-        if (Input.GetMouseButtonDown(0))
+        //if (Input.GetMouseButtonDown(0))
+        if(Input.touchCount == 1)
         {
             if (PlaceItem())
             {
