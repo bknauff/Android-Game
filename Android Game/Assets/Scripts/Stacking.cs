@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Stacking : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class Stacking : MonoBehaviour {
     private bool gameOver = false;
     private const float BOUND_GAIN = .15f;
     private const float START_GAIN = 5;
+    public GameObject uiPanel;
 
 
 	private void Start () {
@@ -35,8 +37,8 @@ public class Stacking : MonoBehaviour {
     }
 	
 	private void Update () {
-        //if (Input.GetMouseButtonDown(0))
-        if(Input.touchCount == 1)
+        if (Input.GetMouseButtonDown(0))
+        //if(Input.touchCount == 1)
         {
             if (PlaceItem())
             {
@@ -105,7 +107,7 @@ public class Stacking : MonoBehaviour {
                 t.localScale = new Vector3(bounds.x, 1, bounds.y);
                 t.localPosition = new Vector3(middle - (lastPosition.x / 2), scoreCount, lastPosition.z);
             }
-            /*else
+            else
             {
                 if(combo > START_GAIN)
                 {
@@ -120,7 +122,7 @@ public class Stacking : MonoBehaviour {
                 }
                 combo++;
                 t.localPosition = new Vector3(lastPosition.x, scoreCount, lastPosition.z);
-            }*/
+            }
         }
         else
         {
@@ -138,7 +140,7 @@ public class Stacking : MonoBehaviour {
                 t.localScale = new Vector3(bounds.x, 1, bounds.y);
                 t.localPosition = new Vector3(lastPosition.x, scoreCount,middle - (lastPosition.z/2));
             }
-            /*else
+            else
             {
                 if (combo > START_GAIN)
                 {
@@ -153,7 +155,7 @@ public class Stacking : MonoBehaviour {
                 }
                 combo++;
                 t.localPosition = new Vector3(lastPosition.x, scoreCount, lastPosition.z);
-            }*/
+            }
         }
         secPosition = (isMovingX)
             ? t.localPosition.x
@@ -164,8 +166,18 @@ public class Stacking : MonoBehaviour {
 
     private void EndGame()
     {
-        Debug.Log("Lose");
+        if(PlayerPrefs.GetInt("score") < scoreCount)
+        {
+            PlayerPrefs.SetInt("score", scoreCount);
+        }
         gameOver = true;
+        uiPanel.SetActive(true);
         Stack[stackIndex].AddComponent<Rigidbody>();
     }
+
+    public void NewGame(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
+

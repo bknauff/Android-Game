@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayMenu : MonoBehaviour {
+    public Text scoreText;
 
-    void OnMouseDown()
+    public void Start()
     {
-        Application.LoadLevel("GameLevel");
+        scoreText.text = PlayerPrefs.GetInt("score").ToString();
+    }
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("GameLevel");
     }
 }
